@@ -1,0 +1,126 @@
+package airline;
+
+public class airline_data {
+    String  name;
+    static  int ite=0;
+    int id;
+    int l[][]=new int[10][3];
+    int r[][]=new int[10][3];
+    int lw,lm,ls,rw,rm,rs;
+    public  airline_data(String s)
+    {
+        name=s;
+        id=ite++;
+        lw=0;lm=1;ls=2;rw=0;rm=1;rs=2;
+    }
+
+    public void print()
+    {
+       for(int i=0;i<l.length;i++)
+       {
+           for(int j=0;j<l[0].length;j++)
+           {
+               System.out.print(l[i][j]+"  ");
+           }
+           System.out.print("     ");
+           for(int j=0;j<l[0].length;j++)
+           {
+               System.out.print(r[i][j]+"  ");
+           }
+           System.out.println();
+       }
+
+    }
+    public void choose()
+    {
+        String d[]={"LW","LM","LS","RS","RM","RW"};
+        int avlseat=0,id=0;
+        for(int i=0;i<l[0].length;i++) {
+            for (int j = 0; j < l.length; j++) {
+                if (l[j][i] == 0)
+                {
+                    id=1;break;
+                }
+            }
+            if(id==1)
+            System.out.println(d[avlseat] + " ");
+            avlseat++;
+            id=0;
+        }
+        for(int i=0;i<l[0].length;i++) {
+            for (int j = 0; j < l.length; j++) {
+                if (r[j][i] == 0)
+                {
+                    id=1;
+                }
+
+            }
+            if(id==1)
+            System.out.println(d[avlseat] + " ");
+            avlseat++;id=0;
+        }
+
+    }
+   public void booking_status(String o)
+   {
+       switch (o)
+       {
+           case "lw":
+           {
+               for(int i=0;i<l.length;i++) {
+                   if(l[i][lw]==0)
+                        l[i][lw]=1; break;
+               }
+               break;
+           }
+           case "lm":
+           {
+               for(int i=0;i<l.length;i++) {
+                   if(l[i][lm]==0)
+                   {
+                       l[i][lm]=1; break;
+                   }
+               }
+               break;
+           }
+           case "ls":
+           {
+               for(int i=0;i<l.length;i++) {
+                   if(l[i][ls]==0) {
+                       l[i][ls] = 1; break;
+                   }
+               }
+               break;
+           }
+           case "rm":
+           {
+               for(int i=0;i<l.length;i++) {
+                   if(r[i][rm]==0)
+                       r[i][rm]=1; break;
+               }
+               break;
+           }
+           case "rs":
+           {
+               for(int i=0;i<l.length;i++) {
+                   if(r[i][rs]==0)
+                       r[i][rs]=1; break;
+               }
+               break;
+           }
+
+           case "rw":
+           {
+               for(int i=0;i<l.length;i++) {
+                   if(r[i][rw]==0)
+                       r[i][rw]=1; break;
+               }
+               break;
+           }
+
+
+
+       }
+   }
+
+}
