@@ -1,0 +1,139 @@
+package airline;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
+
+
+public class airline_process {
+    public static ArrayList<airline_data> al = new ArrayList<>();
+    static String path[][] = new String[4][8];
+
+    public static void create(int n) {
+
+        al.add(new airline_data("VIN-AIRLINE"));
+        path[0] = new String[]{"CHENNAI", "8", "NEW DELHI", "10", "KOLKATA", "13", "PUNA", "17"};
+        al.add(new airline_data("KUMAR-AIRLINE"));
+        path[1] = new String[]{"BENGALORE", "2", "MUMBAI", "4", "CHENNAI", "6", "PUNA", "10"};
+        al.add(new airline_data("VS-AIRLINE"));
+        path[2] = new String[]{"CHENNAI", "13", "MUMBAI", "15", "UP", "18", "NEW DELHI","20"};
+                al.add(new airline_data("SBK-AIRLINE"));
+        path[3] = new String[]{"BENGALORE", "19", "HYDRABHED", "20", "NEW DELHI", "21", "KOLKATA", "24"};
+    }
+        public static List<airline_data> avaliable_airplane (String from, String to, String ti)
+        {
+            List<airline_data> aval_list = new ArrayList<>();
+            for (int i = 0; i < path.length; i++) {
+                int f = 0, t = 0;
+                for (int j = 0; j < path[0].length; j++) {
+                    if (j < path[0].length - 1) {
+                        if (from.equals(path[i][j]) && Integer.parseInt(ti) <= Integer.parseInt(path[i][j + 1])) f = 1;
+                    }
+                    if (to.equals(path[i][j]) && Integer.parseInt(ti) <= Integer.parseInt(path[i][j + 1])) t = 1;
+                }
+                if (f == 1 && t == 1) aval_list.add(al.get(i));
+            }
+            return aval_list;
+        }
+
+        public static void main (String[]args){
+                   create(4);
+            String pname, gender, emailid, phnno, from, to, st_time;
+            Scanner in = new Scanner(System.in);
+            while (true) {
+                System.out.println("IF YOU WANT TO BOOK THE AIRPLAIN THEN CLICK 1");
+                System.out.println("IF YOU WANT TO SEE THE AVALIABLE SEATS IN PARTICULAR AIRPLAIN THEN CLICK 2");
+                int choose = in.nextInt();
+                if (choose != 1 && choose != 2) System.out.println("Please enter valid code;");
+                if (choose == 1) {
+                    System.out.println("Enter Your Name:");
+                    pname = in.next();
+                    System.out.println("Enter Your Gender: male or female");
+                    gender = in.next();
+                    System.out.println("Enter Your EmailId:");
+                    emailid = in.next();
+                    System.out.println("Enter Your PhnNo:");
+                    phnno = in.next();
+                    System.out.println("Travel Starts From:");
+                    from = in.next();
+                    System.out.println("Trevel End To");
+                    to = in.next();
+                    System.out.println("Travel Starting Time in 24 hrs TimeLine");
+                    st_time = in.next();
+                    List<airline_data> k = new ArrayList<>(avaliable_airplane(from, to, st_time));
+                    if (k.size() == 0)
+                        System.out.println("THERE IS NO FLIGHTS ARE AVALIABLE-->");
+                    else {
+                        System.out.println("Avaliable Flights Are Displayed :");
+                        System.out.println();
+                        for (int i = 0; i < k.size(); i++) {
+                            int getid = k.get(i).id;
+                            System.out.println((i+1)+"<-->FLIGHT NAME:" + k.get(i).name);
+                            System.out.println();
+                            System.out.println("PATH FOR " + k.get(i).name);
+                            System.out.println();
+                            int iter = 0;
+                            while (iter < 8) {
+                                System.out.println("FROM: " + path[getid][iter] + "--->STARTING TIME:" + path[getid][iter + 1]);
+                                System.out.println("--------------------------------------");
+                                iter = iter + 2;
+
+                            }
+                            System.out.println();
+                            System.out.println();
+                            System.out.println("---------------------------------------------------------------------------------------");
+                            System.out.println();
+                            System.out.println();
+                        }
+                        System.out.println("Enter Your Comfortable Flight No :");
+                        System.out.println();
+                        int af=in.nextInt();
+                        System.out.println("Avaliable Seats Are Displayed:");
+                        System.out.println();
+                        System.out.println("Avaliable seats locations are displayed :");
+                        k.get(af-1).choose();
+                        System.out.println();
+                        System.out.println("Avaliable seats :");
+                        System.out.println();
+                        k.get(af-1).print();
+                        System.out.println();
+                        System.out.println();
+                        System.out.println("Enter your Comfortable Locations");
+                        String se=in.next();
+                        System.out.println();
+                        System.out.println(k.get(af-1).name+" IS BOOKED...... ENJOY YOUR JOURNEY");
+                        k.get(af-1).booking_status(se.toLowerCase());
+                        System.out.println();
+                        System.out.println();
+                    }
+
+                }
+                else {
+                    System.out.println("TOTAL_FIGHTS_ARE...,");
+                    for(int i=0;i<al.size();i++)
+                    {
+                        System.out.println(i+1+" "+al.get(i).name);
+                    }
+                    System.out.println();
+                    System.out.println("PLEASE ENTER YOUR FAVT AIROPLAIN NO: ");
+                    int fno=in.nextInt();
+                    System.out.println();
+                    System.out.println("PATH FOR "+al.get(fno-1).name);
+                    System.out.println();
+                     int iter = 0;
+                    while (iter < 8) {
+                        System.out.println("FROM: " + path[fno-1][iter] + "--->STARTING TIME:" + path[fno-1][iter + 1]);
+                        System.out.println("--------------------------------------");
+                        iter = iter + 2;
+                    }
+                    System.out.println();
+                    System.out.println("AVALIABLE SEATS ARE DISPLAYED IN ZERO'S");
+                    System.out.println();
+                    al.get(fno-1).print();
+                    System.out.println();
+                    System.out.println();
+                }
+            }
+        }
+    }
